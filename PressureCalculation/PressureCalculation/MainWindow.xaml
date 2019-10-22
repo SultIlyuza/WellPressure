@@ -1,0 +1,74 @@
+﻿<Window x:Class="PressureCalculation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
+        xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
+        xmlns:chartingprimitives="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Primitives;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
+        
+        xmlns:local="clr-namespace:PressureCalculation"
+        mc:Ignorable="d"
+        Title="Расчет давления столба жидкости скважины на заданной глубине" Height="695.075" Width="877">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.47*"/>
+            <ColumnDefinition Width="0.8*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ListView Name ="wellsListView" Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Wells}"  SelectedItem="{Binding SelectedWell}" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="332">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}">ID</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Depth}">Глубина</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=DensityOfLiquid}">Плотность жидкости</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=NumberOfSteps}">Количество шагов разбиения</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="17,24,0,0" TextWrapping="Wrap" Text="Глубина:" VerticalAlignment="Top"/>
+        <TextBox x:Name="DepthTB" Text="{Binding depth}" HorizontalAlignment="Left" Height="23" Margin="141,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75"/>
+        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="17,52,0,0" TextWrapping="Wrap" Text="Плотность жидкости:" VerticalAlignment="Top"/>
+        <TextBox x:Name="DensityTB" Text="{Binding density}" HorizontalAlignment="Left" Height="23" Margin="141,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75"/>
+        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="17,52,0,0" TextWrapping="Wrap" Text="Плотность жидкости:" VerticalAlignment="Top"/>
+        <TextBox x:Name="NumOfStepTB" Text="{Binding numOfSteps}" HorizontalAlignment="Left" Height="23" Margin="141,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75"/>
+        <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="17,82,0,0" TextWrapping="Wrap" Text="Шаги разбиения:" VerticalAlignment="Top"/>
+        <Button x:Name="AddBt" Content="Добавить" Command="{Binding AddCommand}" HorizontalAlignment="Left" Margin="141,119,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="CalculateBt" Content="Рассчитать давление" Command="{Binding CalculateCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="31,22,0,0" VerticalAlignment="Top" Width="146"/>
+        <Button x:Name="PauseBt" Content="Остановить/Возобновить расчет" Command="{Binding PauseCommand}" Grid.Column="2" HorizontalAlignment="Left" Margin="31,66,0,0" VerticalAlignment="Top" Width="146" Height="22" IsEnabled="{Binding IsEnablePauseClick}"/>
+        <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="22,119,0,0" TextWrapping="Wrap" Text="{Binding PauseText}" VerticalAlignment="Top" Grid.Column="2" Height="80"/>
+
+        <Canvas Grid.Row ="1 " Grid.Column="0" Grid.ColumnSpan="3" DataContext="{Binding SelectedWell}"  HorizontalAlignment="Left"  VerticalAlignment="Top">
+            <ScrollViewer ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Canvas.Left="19" Canvas.Top="10">
+                <ListView Name ="PressuresListView" ItemsSource="{Binding Pressures}" Grid.Column="1" MaxHeight="300" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Key}">Глубина</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Value}">Давление</GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+
+            <charting:Chart  Name="lineChart" Title="Давление"  VerticalAlignment="Top" Height="292" Canvas.Left="272" Width="547" Canvas.Top="10" >
+                <charting:LineSeries  ItemsSource="{Binding Pressures, UpdateSourceTrigger=PropertyChanged}"  DependentValuePath="Value" IndependentValuePath="Key"  IsSelectionEnabled="True" Margin="0,0,1,0 ">
+                    <charting:LineSeries.LegendItemStyle>
+                        <Style TargetType="{x:Type charting:LegendItem}" >
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </Style>
+                    </charting:LineSeries.LegendItemStyle>
+                </charting:LineSeries>
+                <charting:Chart.Axes>
+                    <charting:LinearAxis Orientation="X" Title="Глубина"  ShowGridLines="False" />
+                    <charting:LinearAxis Title="Давление" Orientation="Y"  ShowGridLines="False"/>
+                </charting:Chart.Axes>
+            </charting:Chart>
+        </Canvas>
+
+    </Grid>
+</Window>

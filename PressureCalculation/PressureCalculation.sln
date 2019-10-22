@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PressureCalculation", "PressureCalculation\PressureCalculation.csproj", "{3AABE98A-50B0-4EF3-97C7-6F6EC9FF12CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3AABE98A-50B0-4EF3-97C7-6F6EC9FF12CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AABE98A-50B0-4EF3-97C7-6F6EC9FF12CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AABE98A-50B0-4EF3-97C7-6F6EC9FF12CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AABE98A-50B0-4EF3-97C7-6F6EC9FF12CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE318B1C-2398-4FA3-9C64-0613ABFC810D}
+	EndGlobalSection
+EndGlobal
